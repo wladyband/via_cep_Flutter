@@ -49,7 +49,6 @@ class _HomePageState extends State<HomePage> {
                   onChanged: controller.onZipCepChanged,
                   style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
-                    border: InputBorder.none,
                     hintText: 'Digite aqui o CEP, por gentileza',
                     hintStyle: const TextStyle(
                       color: AppColors.grey,
@@ -59,7 +58,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Text("Clique no ícone abaixo para obter a resposta"),
+              Text("Clique no ícone abaixo para obter o endereço",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
