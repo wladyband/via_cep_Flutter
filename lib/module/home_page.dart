@@ -2,6 +2,7 @@ import 'package:cep/core/color/AppColor.dart';
 
 import 'package:cep/core/config/app_images.dart';
 import 'package:cep/module/home_controller.dart';
+import 'package:cep/core/ui/app_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,28 +42,14 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(36.0),
-                child: TextField(
-                  autofocus: true,
-                  controller: textController,
-                  onChanged: controller.onZipCepChanged,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    hintText: 'Digite aqui o CEP, por gentileza',
-                    hintStyle: const TextStyle(
-                      color: AppColors.grey,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              AppField(
+                label: "Digite o CEP",
+                controller: textController,
+                onChanged: controller.onZipCepChanged,
               ),
-              Text("Clique no ícone abaixo para obter o endereço",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black
-                ),
+              Text(
+                "Clique no ícone abaixo para obter o endereço",
+                style: TextStyle(fontSize: 18, color: Colors.black),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -74,21 +61,9 @@ class _HomePageState extends State<HomePage> {
                       zipCodeLocated =
                           await readAddressByCep(controller.zipCep!);
 
-                      if(zipCodeLocated.isEmpty){
-
-                          Get.snackbar(
-                            'CEP inválido',
-                            '',
-                            colorText: Colors.blueGrey,
-                            margin: EdgeInsets.only(top: 220),
-                            forwardAnimationCurve: Curves.easeOutBack,
-                          );
-
-                      }
+                      Validation();
 
                       if (zipCodeLocated.isEmpty) return;
-
-                      print(" valor ${zipCodeLocated}");
 
                       setState(() {
                         textController.text = '';
@@ -132,5 +107,17 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void Validation() {
+    if (zipCodeLocated.isEmpty) {
+      Get.snackbar(
+        'CEP inválido',
+        '',
+        colorText: Colors.blueGrey,
+        margin: EdgeInsets.only(top: 220),
+        forwardAnimationCurve: Curves.easeOutBack,
+      );
+    }
   }
 }
